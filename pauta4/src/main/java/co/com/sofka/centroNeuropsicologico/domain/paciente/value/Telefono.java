@@ -25,6 +25,19 @@ public class Telefono implements ValueObject<String> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Telefono telefono = (Telefono) o;
+        return Objects.equals(value, telefono.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
     public String value() {
         return value;
     }

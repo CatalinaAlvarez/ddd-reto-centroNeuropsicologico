@@ -35,7 +35,6 @@ class CrearPacienteUseCaseTest {
         Assertions.assertEquals("xxxx", event.aggregateRootId());
         Assertions.assertEquals("123456789", event.getTelefono().value());
 
-
     }
 
 
