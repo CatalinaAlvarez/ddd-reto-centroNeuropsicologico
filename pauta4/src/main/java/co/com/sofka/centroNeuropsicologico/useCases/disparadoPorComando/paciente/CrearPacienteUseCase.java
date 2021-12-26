@@ -10,6 +10,7 @@ public class CrearPacienteUseCase extends UseCase<RequestCommand<CrearPaciente>,
 
     @Override
     public void executeUseCase(RequestCommand<CrearPaciente> crearPacienteRequestCommand) {
+
         var command = crearPacienteRequestCommand.getCommand();
 
         Paciente paciente;
@@ -20,6 +21,5 @@ public class CrearPacienteUseCase extends UseCase<RequestCommand<CrearPaciente>,
         );
 
         emit().onResponse(new ResponseEvents(paciente.getUncommittedChanges()));
-
     }
 }

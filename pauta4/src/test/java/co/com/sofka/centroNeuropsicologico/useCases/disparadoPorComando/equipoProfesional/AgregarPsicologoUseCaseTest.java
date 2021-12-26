@@ -28,6 +28,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AgregarPsicologoUseCaseTest {
 
+    @Mock
+    DomainEventRepository repository;
+
     @Test
     void psicologoAgregadoUseCaseTest(){
 
@@ -42,21 +45,21 @@ class AgregarPsicologoUseCaseTest {
         var useCase = new AgregarPsicologoUseCase();
 
         //act
+        when(repository.getEventsBy("xxxx")).thenReturn(eventList());
+        useCase.addRepository(repository);
 
         var events = UseCaseHandler.getInstance()
+                .setIdentifyExecutor(equipoProfesionalId.value())
                 .syncExecutor(useCase, new RequestCommand<>(command))
                 .orElseThrow();
 
         //asserts
-
-        var event = (PsicologoAgregado)events.getDomainEvents().get(1);
+        var event = (PsicologoAgregado)events.getDomainEvents().get(0);
         Assertions.assertEquals("Claudia", event.getNombre().value());
         Assertions.assertEquals("claudia@gmail.com", event.getEmail().value());
         Assertions.assertEquals("15987455", event.getTarjetaProfesional().value());
     }
 
-    @Mock
-    DomainEventRepository repository;
 
     @Test
     void psicologoAgregadoErrorUseCaseTest(){
@@ -72,25 +75,30 @@ class AgregarPsicologoUseCaseTest {
         var command = new AgregarPsicologo(equipoProfesionalId, psicologoId, nombre, email, tarjetaProfesional);
         var useCase = new AgregarPsicologoUseCase();
 
-//        when(repository.getEventsBy("xxxx")).thenReturn(eventList());
-//        useCase.addRepository(repository);
+        when(repository.getEventsBy("xxxx")).thenReturn(eventListError());
+        useCase.addRepository(repository);
 
-//        Assertions.assertThrows(BusinessException.class, ()->{
-//            UseCaseHandler.getInstance().setIdentifyExecutor(equipoProfesionalId.value())
-//                    .syncExecutor(useCase, new RequestCommand<>(command))
-//                    .orElseThrow();
-//        });
+        Assertions.assertThrows(BusinessException.class, ()->{
+            UseCaseHandler.getInstance().setIdentifyExecutor(equipoProfesionalId.value())
+                    .syncExecutor(useCase, new RequestCommand<>(command))
+                    .orElseThrow();
+        });
     }
 
     private List<DomainEvent> eventList(){
         return List.of(new EquipoProfesionalCreado(EquipoProfesionalId.of("xxxx"),
                 new TipoEquipo(TipoEquipo.Valor.INFANCIA)
-                ),
-                new PsicologoAgregado(PsicologoId.of("yyyy"),
-                        new Nombre("Pablo"),
-                        new Email("pablo@gmail.com"),
-                        new TarjetaProfesional("1584652")
                 ));
+    }
+
+    private List<DomainEvent> eventListError(){
+        return List.of(new EquipoProfesionalCreado(EquipoProfesionalId.of("xxxx"),
+                new TipoEquipo(TipoEquipo.Valor.INFANCIA)
+        ),new PsicologoAgregado(PsicologoId.of("1"),
+                new Nombre("Cata"),
+                new Email("cata@gmail.com"),
+                new TarjetaProfesional("1546846"))
+        );
     }
 
 }

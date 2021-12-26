@@ -17,14 +17,12 @@ public class AgregarPsicologoUseCase extends UseCase<RequestCommand<AgregarPsico
 
         EquipoProfesional equipoProfesional;
 
-        equipoProfesional = new EquipoProfesional(
-                new EquipoProfesionalId(),
-                new TipoEquipo(TipoEquipo.Valor.INFANCIA)
-        );
+        equipoProfesional = EquipoProfesional.from(command.getEquipoProfesionalId(),
+                retrieveEvents());
 
-//        if(equipoProfesional.psicologo() != null){
-//            throw new BusinessException(command.getEquipoProfesionalId().value(), "No puede agregar más de un psicólogo");
-//        }
+        if(equipoProfesional.psicologo() != null){
+            throw new BusinessException(command.getEquipoProfesionalId().value(), "No puede agregar más de un psicólogo");
+        }
 
         equipoProfesional.agregarPsicologo(
                 command.getNombre(),

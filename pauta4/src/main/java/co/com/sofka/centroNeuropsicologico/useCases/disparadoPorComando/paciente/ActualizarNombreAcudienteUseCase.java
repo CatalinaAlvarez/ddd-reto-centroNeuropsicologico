@@ -28,7 +28,8 @@ public class ActualizarNombreAcudienteUseCase extends UseCase<RequestCommand<Act
                 new Email("pedro@gmail.com")
         );
 
-        paciente.actualizarNombreAcudiente(command.getAcudienteId(), command.getNombre());
+        paciente.actualizarNombreAcudiente(command.getAcudienteId(),
+                command.getNombre());
 
         emit().onResponse(new ResponseEvents(paciente.getUncommittedChanges()));
     }

@@ -3,6 +3,7 @@ package co.com.sofka.centroNeuropsicologico.useCases.disparadoPorComando.pacient
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.centroNeuropsicologico.domain.paciente.command.CrearPaciente;
+import co.com.sofka.centroNeuropsicologico.domain.paciente.event.AcudienteAgregado;
 import co.com.sofka.centroNeuropsicologico.domain.paciente.event.PacienteCreado;
 import co.com.sofka.centroNeuropsicologico.domain.paciente.value.PacienteId;
 import co.com.sofka.centroNeuropsicologico.domain.paciente.value.Telefono;
