@@ -32,7 +32,6 @@ class ActualizarDuracionCitaUseCaseTest {
     void actualizarDuracionCitaUseCaseTest(){
 
         //arrange
-
         ConsultaId consultaId = ConsultaId.of("xxxx");
         CitaId citaId = CitaId.of("1");
 
@@ -40,7 +39,6 @@ class ActualizarDuracionCitaUseCaseTest {
         var useCase = new ActualizarDuracionCitaUseCase();
 
         //act
-
         when(repository.getEventsBy("xxxx")).thenReturn(eventList());
         useCase.addRepository(repository);
 
@@ -50,7 +48,6 @@ class ActualizarDuracionCitaUseCaseTest {
                 .orElseThrow();
 
         //asserts
-
         var event = (DuracionCitaActualizada) events.getDomainEvents().get(0);
         Assertions.assertEquals("1", event.getCitaId().value());
         Assertions.assertEquals(30, event.getDuracion().value());

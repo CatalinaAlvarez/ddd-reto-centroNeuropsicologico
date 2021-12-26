@@ -1,5 +1,6 @@
 package co.com.sofka.centroNeuropsicologico.useCases.disparadoPorComando.equipoProfesional;
 
+import co.com.sofka.business.generic.BusinessException;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.business.support.ResponseEvents;
@@ -19,15 +20,9 @@ public class ActualizarEmailNeuropsicologoUseCase extends UseCase<RequestCommand
 
         EquipoProfesional equipoProfesional;
 
-        equipoProfesional = new EquipoProfesional(
-                new EquipoProfesionalId(),
-                new TipoEquipo(TipoEquipo.Valor.INFANCIA)
-        );
-
-        equipoProfesional.agregarNeuropsicologo(
-                new Nombre("Juan"),
-                new Email("juan@gmail.com"),
-                new TarjetaProfesional("14654655"));
+        equipoProfesional = EquipoProfesional.from(
+                command.getEquipoProfesionalId(),
+                retrieveEvents());
 
         equipoProfesional.actualizarEmailNeuropsicologo(
                 command.getNeuropsicologoId(),
