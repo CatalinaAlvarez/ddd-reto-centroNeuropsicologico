@@ -17,10 +17,8 @@ public class AgregarAcudienteUseCase extends UseCase<RequestCommand<AgregarAcudi
 
         Paciente paciente;
 
-        paciente = new Paciente(
-                new PacienteId(),
-                new Telefono("123456789")
-        );
+        paciente = Paciente.from(
+                command.getPacienteId(), retrieveEvents());
 
         paciente.agregarAcudiente(
                 command.getNombre(),

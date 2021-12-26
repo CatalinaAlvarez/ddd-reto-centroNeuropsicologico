@@ -5,13 +5,7 @@ import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.business.support.ResponseEvents;
 import co.com.sofka.centroNeuropsicologico.domain.consulta.Consulta;
 import co.com.sofka.centroNeuropsicologico.domain.consulta.command.ActualizarDuracionCita;
-import co.com.sofka.centroNeuropsicologico.domain.consulta.value.ConsultaId;
-import co.com.sofka.centroNeuropsicologico.domain.consulta.value.Duracion;
-import co.com.sofka.centroNeuropsicologico.domain.consulta.value.Fecha;
-import co.com.sofka.centroNeuropsicologico.domain.consulta.value.Tipo;
-import co.com.sofka.centroNeuropsicologico.domain.equipoProfesional.value.EquipoProfesionalId;
 
-import java.util.Date;
 
 public class ActualizarDuracionCitaUseCase extends UseCase<RequestCommand<ActualizarDuracionCita>, ResponseEvents> {
     @Override
@@ -20,15 +14,7 @@ public class ActualizarDuracionCitaUseCase extends UseCase<RequestCommand<Actual
 
         Consulta consulta;
 
-        consulta = new Consulta(
-                new ConsultaId(),
-                new EquipoProfesionalId(),
-                new Fecha(new Date())
-        );
-
-        consulta.agregarCita(new Tipo(Tipo.Valor.ASESORIA_PSICOLOGICA),
-                new Duracion(20));
-
+        consulta = Consulta.from(command.getConsultaId(), retrieveEvents());
         consulta.actualizarDuracionCita(command.getCitaId(), command.getDuracion());
 
         emit().onResponse(new ResponseEvents(consulta.getUncommittedChanges()));

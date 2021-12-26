@@ -6,8 +6,6 @@ import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.business.support.ResponseEvents;
 import co.com.sofka.centroNeuropsicologico.domain.equipoProfesional.EquipoProfesional;
 import co.com.sofka.centroNeuropsicologico.domain.equipoProfesional.command.AgregarPsicologo;
-import co.com.sofka.centroNeuropsicologico.domain.equipoProfesional.value.EquipoProfesionalId;
-import co.com.sofka.centroNeuropsicologico.domain.equipoProfesional.value.TipoEquipo;
 
 public class AgregarPsicologoUseCase extends UseCase<RequestCommand<AgregarPsicologo>, ResponseEvents> {
 

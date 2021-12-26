@@ -5,8 +5,6 @@ import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.business.support.ResponseEvents;
 import co.com.sofka.centroNeuropsicologico.domain.paciente.Paciente;
 import co.com.sofka.centroNeuropsicologico.domain.paciente.command.AgregarPacientePrincipal;
-import co.com.sofka.centroNeuropsicologico.domain.paciente.value.PacienteId;
-import co.com.sofka.centroNeuropsicologico.domain.paciente.value.Telefono;
 
 public class AgregarPacientePrincipalUseCase extends UseCase<RequestCommand<AgregarPacientePrincipal>, ResponseEvents> {
     @Override
@@ -16,12 +14,11 @@ public class AgregarPacientePrincipalUseCase extends UseCase<RequestCommand<Agre
 
         Paciente paciente;
 
-        paciente = new Paciente(
-                new PacienteId(),
-                new Telefono("123456789")
-        );
+        paciente = Paciente.from(command.getPacienteId(), retrieveEvents());
 
-        paciente.agregarPacientePrincipal(command.getNombre(), command.getEdad());
+        paciente.agregarPacientePrincipal(
+                command.getNombre(),
+                command.getEdad());
 
         emit().onResponse(new ResponseEvents(paciente.getUncommittedChanges()));
     }

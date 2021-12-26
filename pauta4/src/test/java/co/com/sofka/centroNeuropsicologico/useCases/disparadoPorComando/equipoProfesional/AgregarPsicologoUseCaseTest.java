@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -58,6 +59,7 @@ class AgregarPsicologoUseCaseTest {
         Assertions.assertEquals("Claudia", event.getNombre().value());
         Assertions.assertEquals("claudia@gmail.com", event.getEmail().value());
         Assertions.assertEquals("15987455", event.getTarjetaProfesional().value());
+        Mockito.verify(repository).getEventsBy("xxxx");
     }
 
 
@@ -83,6 +85,7 @@ class AgregarPsicologoUseCaseTest {
                     .syncExecutor(useCase, new RequestCommand<>(command))
                     .orElseThrow();
         });
+        Mockito.verify(repository).getEventsBy("xxxx");
     }
 
     private List<DomainEvent> eventList(){
